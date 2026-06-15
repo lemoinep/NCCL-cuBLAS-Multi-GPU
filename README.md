@@ -4,6 +4,10 @@ The goal of this repository is to explore efficient multi-GPU matrix multiplicat
 
 ## Test 1 : NCCL + cuBLAS Multi-GPU Matrix Multiplication
 
+<p align="center">
+<img src="Images/T0001.jpg" width="100%" />
+</p>
+
 This project investigates two strategies for accelerating dense matrix multiplication on NVIDIA GPU architectures, targeting both shared-memory multi-GPU systems and distributed-memory environments.
 
 **Two implementations are provided:**
@@ -23,3 +27,5 @@ The computational kernel relies on cuBLAS, specifically the cublasSgemm routine,
 This approach reflects common design patterns in scalable HPC and AI workloads.
 
 ## Test 2 : NCCL + cuBLAS Multi-GPU ...
+
+
