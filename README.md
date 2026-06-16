@@ -26,6 +26,21 @@ The computational kernel relies on cuBLAS, specifically the cublasSgemm routine,
 
 This approach reflects common design patterns in scalable HPC and AI workloads.
 
+### Detail information
+
+* [Matrix Multiplication with NCCL](docs/InformationLevel1.md)
+
 ## Test 2 : NCCL + cuBLAS Multi-GPU ...
 
 
+
+
+---
+
+## 📝 **Author**
+
+**Dr. Patrick Lemoine**  
+*Engineer Expert in Scientific Computing*  
+[LinkedIn](https://www.linkedin.com/in/patrick-lemoine-7ba11b72/)
+
+---
