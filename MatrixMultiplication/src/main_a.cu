@@ -1,4 +1,3 @@
-```cpp
 #include "gpu_utils.hpp"
 #include "scheduler.hpp"
 #include "cublas_matmul.hpp"
@@ -22,6 +21,7 @@
 static void fillHost(std::vector<float>& v, float base) {
   for (size_t i = 0; i < v.size(); ++i) v[i] = base + 0.001f * float(i % 100);
 }
+
 
 int main() {
   auto gpus = detect_gpus();

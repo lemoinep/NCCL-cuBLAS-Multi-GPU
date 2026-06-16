@@ -30,10 +30,11 @@ This approach reflects common design patterns in scalable HPC and AI workloads.
 
 * [Matrix Multiplication with NCCL](docs/InformationLevel1.md)
 
-## Test 2 : NCCL + cuBLAS Multi-GPU ...
+## Test 2 : NCCL + cuBLAS Multi-GPU Matrix Cholesky
 
+...
 
-
+## Test 3 : NCCL + cuBLAS Multi-GPU ...
 
 ---
 
