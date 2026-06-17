@@ -26,6 +26,7 @@ The computational kernel relies on cuBLAS, specifically the cublasSgemm routine,
 
 This approach reflects common design patterns in scalable HPC and AI workloads.
 
+
 ### Detail information
 
 * [Matrix Multiplication with NCCL](docs/InformationLevel1.md)
@@ -36,7 +37,18 @@ This approach reflects common design patterns in scalable HPC and AI workloads.
 <img src="Images/T0002.jpg" width="100%" />
 </p>
 
-This project implements a distributed, multi-GPU Cholesky factorization using MPI, NCCL, cuSOLVER, and cuBLAS. It decomposes a symmetric positive definite matrix \(A\) into \(LL^T\) across multiple nodes and GPUs, using cuSOLVER for panel factorizations and cuBLAS for trailing matrix updates. The architecture assigns panels to “owner” MPI ranks in a blocked layout, broadcasts each factored panel via stream-aware NCCL collectives, and drives local updates through a task scheduler that overlaps communication and computation without global MPI barriers. 
+This project implements a distributed, multi-GPU Cholesky factorization using MPI, NCCL, cuSOLVER, and cuBLAS. It decomposes a symmetric positive definite matrix \(A\) into \(LL^T\) across multiple nodes and GPUs, using cuSOLVER for panel factorizations and cuBLAS for trailing matrix updates. The architecture assigns panels to “owner” MPI ranks in a blocked layout, broadcasts each factored panel via stream-aware NCCL collectives, and drives local updates through a task scheduler that overlaps communication and computation without global MPI barriers.
+
+**Architecture**
+
+* Dynamic detection of available GPU devices and binding of MPI ranks to GPUs
+* Blocked, right-looking Cholesky factorization with panel ownership per MPI rank
+* Stream-aware NCCL collectives to broadcast factored panels across GPUs and nodes
+* Local panel factorization using cuSOLVER and trailing updates (TRSM + GEMM) using cuBLAS
+* Task-based scheduler that drives panel, broadcast, and update steps without global MPI barriers, enabling overlap of communication and computation
+* MPI-based bootstrap and coordination, designed to run efficiently on Slurm-managed multi-node clusters
+
+
 
 ```mermaid
 flowchart TD
