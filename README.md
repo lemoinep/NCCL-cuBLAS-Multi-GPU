@@ -106,7 +106,90 @@ flowchart TD
 
 ...
 
-## Test 3 : NCCL + cuBLAS Multi-GPU ...
+## Test 3 : Topology-aware NCCL Distributed Pipeline (TNDP)
+
+<p align="center">
+<img src="Images/T0003_1.jpg" width="100%" />
+</p>
+
+This project, Topology-aware NCCL Distributed Pipeline (TNDP), is a multi-GPU and multi-node demonstration of how to exploit hardware topology when using NVIDIA’s NCCL collective communication library together with cuBLAS. The goal is to show that a simple distributed pipeline can be made aware of the underlying NVLink/PCIe and NUMA topology, and that this awareness can measurably improve communication performance at scale.
+
+The pipeline runs a basic compute stage with cuBLAS on each GPU, followed by NCCL collectives (e.g. all-reduce) across multiple GPUs and nodes. It supports two execution modes:
+
+* Baseline: a simple round-robin mapping of MPI ranks to GPUs, without considering topology.
+
+* Topology-aware: a rank placement strategy that:
+
+* detects GPU peer access and NVLink/PCIe connectivity using CUDA APIs,
+
+* groups GPUs into “islands” of high-performance links,
+
+* assigns ranks preferentially within these islands,
+
+* and optionally uses node and NUMA affinity information when running on multi-node systems.
+
+This demo is designed to be useful both as a learning example and as a small but realistic benchmark for multi-GPU NCCL usage in HPC and AI workloads.
+
+
+```mermaid
+flowchart TD
+    %% Nodes
+    S[Start]
+    MPI[MPI initialization]
+    PAR[Parse arguments]
+    HOST[Collect hostnames & assign node_id]
+    TOPO[Detect GPU topology]
+    MAP[Build rank-to-GPU mapping]
+    MODE{Mode?}
+    BAS[Baseline mapping]
+    TOPOA[Topology-aware mapping]
+    CUBLAS[Initialize cuBLAS]
+    NCCL[Initialize NCCL multi-process communicator]
+    RUN[Run pipeline: cuBLAS + NCCL all-reduce]
+    MET[Collect metrics]
+    PLOT[Optional: plot results]
+    END[End]
+
+    %% Flow
+    S --> MPI
+    MPI --> PAR
+    PAR --> HOST
+    HOST --> TOPO
+    TOPO --> MAP
+    MAP --> MODE
+    MODE -->|baseline| BAS
+    MODE -->|topology-aware| TOPOA
+    BAS --> CUBLAS
+    TOPOA --> CUBLAS
+    CUBLAS --> NCCL
+    NCCL --> RUN
+    RUN --> MET
+    MET --> PLOT
+    PLOT --> END
+
+    %% Classes
+    classDef initNode fill:#1f77b4,stroke:#0b3c68,stroke-width:1px,color:#ffffff;
+    classDef topoNode fill:#ff7f0e,stroke:#b25906,stroke-width:1px,color:#ffffff;
+    classDef mapNode fill:#2ca02c,stroke:#166016,stroke-width:1px,color:#ffffff;
+    classDef computeNode fill:#9467bd,stroke:#5d3b7d,stroke-width:1px,color:#ffffff;
+    classDef metricsNode fill:#8c564b,stroke:#5a352f,stroke-width:1px,color:#ffffff;
+    classDef finishNode fill:#7f7f7f,stroke:#4c4c4c,stroke-width:1px,color:#ffffff;
+
+    %% Apply classes
+    class S initNode;
+    class MPI,PAR initNode;
+    class HOST,TOPO topoNode;
+    class MAP,MODE,BAS,TOPOA mapNode;
+    class CUBLAS,NCCL,RUN computeNode;
+    class MET,PLOT metricsNode;
+    class END finishNode;
+```
+
+---
+
+## Test 4 : NCCL + cuBLAS Multi-GPU ...
+
+
 
 ---
 
