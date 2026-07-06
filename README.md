@@ -1,5 +1,14 @@
 # NCCL cuBLAS Multi-GPU 
 
+[![Version](https://img.shields.io/badge/version-1.0-green.svg)](https://github.com/lemoinep/NCCL-cuBLAS-Multi-GPU)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![C++](https://img.shields.io/badge/C++-17%2B-informational.svg)](https://isocpp.org/)
+[![CUDA](https://img.shields.io/badge/CUDA-enabled-brightgreen.svg)]()
+[![NCCL](https://img.shields.io/badge/NCCL-multi--GPU-orange.svg)]()
+[![cuBLAS](https://img.shields.io/badge/cuBLAS-linear--algebra-blue.svg)]()
+[![MultiGPU](https://img.shields.io/badge/Multi--GPU-parallel-critical.svg)]()
+[![HPC](https://img.shields.io/badge/HPC-GPU%20computing-critical.svg)]()
+
 The goal of this repository is to explore efficient multi-GPU matrix multiplication by combining cuBLAS for high-performance compute with NCCL for optimized GPU communication.
 
 ## Test 1 : NCCL + cuBLAS Multi-GPU Matrix Multiplication
